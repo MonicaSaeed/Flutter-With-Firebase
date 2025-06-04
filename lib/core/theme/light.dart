@@ -86,11 +86,11 @@ class AppTheme {
         hintStyle: TextStyle(color: Color(0xFF363636)),
         errorStyle: TextStyle(color: errorColor),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.zero,
+          borderRadius: BorderRadius.circular(4),
           borderSide: BorderSide(color: primaryColor, width: 1.5),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.zero,
+          borderRadius: BorderRadius.circular(4),
           borderSide: BorderSide(color: primaryColor, width: 1.5),
         ),
       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/extensions/extensions.dart';
 
+import 'auth_controller.dart';
+
 class SignupScreen extends StatelessWidget {
   SignupScreen({super.key});
   final emailController = TextEditingController();
@@ -103,9 +105,9 @@ class SignupScreen extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState?.validate() ?? false) {
-                          // Handle sign up logic here
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Signing Up...')),
+                          AuthController().signUp(
+                            email: emailController.text,
+                            password: passwordController.text,
                           );
                         }
                       },
