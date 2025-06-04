@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/extensions/extensions.dart';
 
+import '../../core/services/toast_helper.dart';
+import '../home/home_screen.dart';
 import 'auth_controller.dart';
 
 class SignupScreen extends StatelessWidget {
@@ -103,12 +106,34 @@ class SignupScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState?.validate() ?? false) {
-                          AuthController().signUp(
+                          final user = await AuthController().signUp(
                             email: emailController.text,
                             password: passwordController.text,
                           );
+
+                          if (user != null) {
+                            // Wait and reload to check verification
+                            await Future.delayed(Duration(seconds: 15));
+                            await user.reload();
+                            if (FirebaseAuth
+                                    .instance
+                                    .currentUser
+                                    ?.emailVerified ??
+                                false) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomeScreen(),
+                                ),
+                              );
+                            } else {
+                              ToastHelper.showError(
+                                "Please verify your email before continuing.",
+                              );
+                            }
+                          }
                         }
                       },
                       child: const Text('Sign Up'),
@@ -123,7 +148,13 @@ class SignupScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: const Text('Login'),
+                        child: Text(
+                          'Login',
+                          style: Theme.of(context).textTheme.bodyLarge
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                        ),
                       ),
                     ],
                   ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/extensions/extensions.dart';
 import 'package:flutter_app/feature/auth/signup_screen.dart';
+import 'package:flutter_app/feature/home/home_screen.dart';
+
+import 'auth_controller.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -64,7 +67,23 @@ class LoginScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          AuthController().login(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
+                          if (AuthController().isLoggedIn) {
+                            // Navigate to HomeScreen if login is successful
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomeScreen(),
+                              ),
+                            );
+                          }
+                        }
+                      },
                       child: const Text('Login'),
                     ),
                   ),
@@ -82,7 +101,13 @@ class LoginScreen extends StatelessWidget {
                             ),
                           );
                         },
-                        child: const Text('Sign Up'),
+                        child: Text(
+                          'Sign Up',
+                          style: Theme.of(context).textTheme.bodyLarge
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                        ),
                       ),
                     ],
                   ),
