@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/feature/auth/login_screen.dart';
+import 'package:flutter_app/feature/home/home_screen.dart';
 
 import 'core/theme/light.dart';
 import 'firebase_options.dart';
@@ -15,14 +17,33 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme,
-      home: LoginScreen(),
+      home: AuthGate(),
+    );
+  }
+}
+
+class AuthGate extends StatelessWidget {
+  const AuthGate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        // User is not signed in
+        if (!snapshot.hasData) {
+          return LoginScreen();
+        }
+
+        // Render your application if authenticated
+        return HomeScreen();
+      },
     );
   }
 }

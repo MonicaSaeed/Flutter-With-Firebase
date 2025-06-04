@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   // Define color constants
-  static const Color primaryColor = Color(0xFF0041C2);
+  static const Color primaryColor = Color(0xFF7488E4);
   static const Color backgroundColor = Colors.white;
   static const Color darkGradientColor = Colors.black;
   static const Color errorColor = Colors.red;
@@ -26,27 +26,27 @@ class AppTheme {
           fontSize: 32,
           fontWeight: FontWeight.w700,
           letterSpacing: 2,
-          color: Colors.white,
+          color: Color(0xFF4D4F50),
         ),
         headlineMedium: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          color: Colors.white,
+          color: Colors.black,
         ),
         titleMedium: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
-          color: Colors.black,
+          color: Color(0xFF4D4F50),
         ),
         bodyMedium: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.normal,
-          color: Colors.black,
+          color: Color(0xFF4D4F50),
         ),
         bodySmall: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.normal,
-          color: Colors.white70,
+          color: Color(0xFF4D4F50),
         ),
       ),
       appBarTheme: const AppBarTheme(
@@ -73,16 +73,25 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-          backgroundColor: Color(0xFF03045E),
+          backgroundColor: Color(0xFF7488E4),
           foregroundColor: Color(0xFFFFFCFC),
           textStyle: TextStyle(fontSize: 16),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: Color(0xFFF5F5F5),
+        labelStyle: TextStyle(color: Color(0xFF363636)),
+        floatingLabelStyle: TextStyle(color: Color(0xFF7488E4)),
         hintStyle: TextStyle(color: Color(0xFF363636)),
-        border: OutlineInputBorder(
+        errorStyle: TextStyle(color: errorColor),
+        focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.zero,
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(color: primaryColor, width: 1.5),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.zero,
+          borderSide: BorderSide(color: primaryColor, width: 1.5),
         ),
       ),
     );
