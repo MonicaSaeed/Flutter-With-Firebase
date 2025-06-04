@@ -13,4 +13,10 @@ extension StringExtensions on String {
     );
     return passwordRegex.hasMatch(this);
   }
+
+  /// User name validation containing only alphanumeric characters and underscores, with a length between 3 and 20 characters
+  bool get isValidUsername {
+    final usernameRegex = RegExp(r'^[a-zA-Z_]{3,20}$');
+    return usernameRegex.hasMatch(this);
+  }
 }
