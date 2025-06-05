@@ -38,8 +38,21 @@ class _SignupScreenState extends State<SignupScreen> {
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   const SizedBox(height: 20),
-                  Image.asset('assets/images/login.png', height: 200),
-                  const SizedBox(height: 60),
+                  Image.asset('assets/images/signup.png', height: 200),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Welcome to our app!',
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Please fill in the details below to create your account.',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+
+                  const SizedBox(height: 20),
                   TextFormField(
                     controller: userNameController,
                     decoration: InputDecoration(
