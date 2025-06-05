@@ -9,8 +9,6 @@ class AuthController {
   }
   AuthController._internal();
 
-  bool isLoggedIn = false;
-
   Future<User?> signUp({
     required String email,
     required String password,
@@ -31,15 +29,23 @@ class AuthController {
     }
   }
 
-  Future<void> login({required String email, required String password}) async {
+  Future<bool> login({required String email, required String password}) async {
     try {
+      User? user = FirebaseAuth.instance.currentUser;
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      isLoggedIn = true;
-      ToastHelper.showSuccess("Login Successful");
+      user = userCredential.user;
+      if (user != null && user.emailVerified) {
+        ToastHelper.showSuccess("Login Successful");
+        return true;
+      } else {
+        ToastHelper.showError("Please verify your email before logging in.");
+        return false;
+      }
     } catch (e) {
       ToastHelper.showError("Login Failed: ${e.toString()}");
     }
+    return false;
   }
 
   Future<void> signOut() async {

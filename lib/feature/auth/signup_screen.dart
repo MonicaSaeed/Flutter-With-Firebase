@@ -1,17 +1,25 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/extensions/extensions.dart';
+import 'package:flutter_app/feature/auth/login_screen.dart';
 
-import '../../core/services/toast_helper.dart';
-import '../home/home_screen.dart';
 import 'auth_controller.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
   SignupScreen({super.key});
+
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final userNameController = TextEditingController();
+
   final confirmPasswordController = TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -112,27 +120,13 @@ class SignupScreen extends StatelessWidget {
                             email: emailController.text,
                             password: passwordController.text,
                           );
-
-                          if (user != null) {
-                            // Wait and reload to check verification
-                            await Future.delayed(Duration(seconds: 15));
-                            await user.reload();
-                            if (FirebaseAuth
-                                    .instance
-                                    .currentUser
-                                    ?.emailVerified ??
-                                false) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HomeScreen(),
-                                ),
-                              );
-                            } else {
-                              ToastHelper.showError(
-                                "Please verify your email before continuing.",
-                              );
-                            }
+                          if (context.mounted || user != null) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginScreen(),
+                              ),
+                            );
                           }
                         }
                       },

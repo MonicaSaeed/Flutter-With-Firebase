@@ -67,14 +67,13 @@ class LoginScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState?.validate() ?? false) {
-                          AuthController().login(
+                          bool success = await AuthController().login(
                             email: emailController.text,
                             password: passwordController.text,
                           );
-                          if (AuthController().isLoggedIn) {
-                            // Navigate to HomeScreen if login is successful
+                          if (context.mounted && success) {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
