@@ -130,6 +130,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       onPressed: () async {
                         if (_formKey.currentState?.validate() ?? false) {
                           final user = await AuthController().signUp(
+                            name: userNameController.text,
                             email: emailController.text,
                             password: passwordController.text,
                           );

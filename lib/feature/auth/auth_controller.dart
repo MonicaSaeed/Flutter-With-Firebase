@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_app/feature/profile/user_model.dart';
 
 import '../../core/services/toast_helper.dart';
+import '../profile/user_controller.dart';
 
 class AuthController {
   static final AuthController _instance = AuthController._internal();
@@ -10,6 +12,7 @@ class AuthController {
   AuthController._internal();
 
   Future<User?> signUp({
+    required String name,
     required String email,
     required String password,
   }) async {
@@ -19,7 +22,9 @@ class AuthController {
 
       final user = userCredential.user;
       if (user != null) {
-        await user.sendEmailVerification();
+        UserModel newUser = UserModel(uid: user.uid, email: email, name: name);
+        await UserController().createUser(newUser);
+        await sendEmailVerification(user);
         ToastHelper.showSuccess("Verification email sent. Please verify.");
       }
       return user;
@@ -57,9 +62,8 @@ class AuthController {
     }
   }
 
-  Future<void> sendEmailVerification() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null && !user.emailVerified) {
+  Future<void> sendEmailVerification(User user) async {
+    if (!user.emailVerified) {
       try {
         await user.sendEmailVerification();
         ToastHelper.showSuccess("Verification Email Sent");
