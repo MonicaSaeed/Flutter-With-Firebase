@@ -37,6 +37,24 @@ class UserController {
         });
   }
 
+  Future<UserModel> getUserById(String uid) async {
+    try {
+      final userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .get();
+      if (userDoc.exists && userDoc.data() != null) {
+        return UserModel.fromMap(userDoc.data() as Map<String, dynamic>);
+      } else {
+        ToastHelper.showError("User not found");
+        throw Exception("User not found");
+      }
+    } catch (e) {
+      ToastHelper.showError("Failed to fetch user: ${e.toString()}");
+      throw Exception("Failed to fetch user");
+    }
+  }
+
   Future<void> updateUserProfile({
     required String uid,
     String? profilePictureUrl,

@@ -80,18 +80,6 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 const Divider(),
                 const SizedBox(height: 16),
-                Text("Posts (${user.postsIds.length})"),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: user.postsIds.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: const Icon(Icons.article),
-                        title: Text('Post ID: ${user.postsIds[index]}'),
-                      );
-                    },
-                  ),
-                ),
               ],
             ),
           );
