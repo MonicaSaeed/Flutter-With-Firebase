@@ -36,4 +36,25 @@ class UserController {
           }
         });
   }
+
+  Future<void> updateUserProfile({
+    required String uid,
+    String? profilePictureUrl,
+    String? name,
+  }) async {
+    try {
+      final userDoc = FirebaseFirestore.instance.collection('users').doc(uid);
+      final updates = <String, dynamic>{};
+      if (profilePictureUrl != null) {
+        updates['profilePictureUrl'] = profilePictureUrl;
+      }
+      if (name != null) {
+        updates['name'] = name;
+      }
+      await userDoc.update(updates);
+      ToastHelper.showSuccess("User profile updated successfully");
+    } catch (e) {
+      ToastHelper.showError("Failed to update user profile: ${e.toString()}");
+    }
+  }
 }

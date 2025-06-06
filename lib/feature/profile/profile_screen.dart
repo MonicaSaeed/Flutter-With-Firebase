@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/feature/profile/components/alert_dialog_change_user_data.dart';
 import 'package:flutter_app/feature/profile/user_controller.dart';
 import 'package:flutter_app/feature/profile/user_model.dart';
 
@@ -7,7 +8,8 @@ import '../auth/auth_controller.dart';
 import '../auth/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  ProfileScreen({super.key});
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +62,20 @@ class ProfileScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                   ),
+                ),
+                const SizedBox(height: 8),
+                // edit profile button
+                ElevatedButton.icon(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialogChangeUserData(user: user);
+                      },
+                    );
+                  },
+                  icon: const Icon(Icons.edit),
+                  label: const Text('Edit Profile'),
                 ),
                 const SizedBox(height: 24),
                 const Divider(),
