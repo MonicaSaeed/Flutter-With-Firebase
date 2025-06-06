@@ -133,7 +133,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             email: emailController.text,
                             password: passwordController.text,
                           );
-                          if (context.mounted || user != null) {
+                          if (context.mounted && user != null) {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

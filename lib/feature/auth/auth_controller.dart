@@ -74,4 +74,15 @@ class AuthController {
       );
     }
   }
+
+  Future<void> resetPassword(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      ToastHelper.showSuccess("Password reset email sent.");
+    } catch (e) {
+      ToastHelper.showError(
+        "Failed to send password reset email: ${e.toString()}",
+      );
+    }
+  }
 }

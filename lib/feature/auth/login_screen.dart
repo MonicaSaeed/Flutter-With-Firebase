@@ -4,6 +4,7 @@ import 'package:flutter_app/feature/auth/signup_screen.dart';
 import 'package:flutter_app/feature/home/home_screen.dart';
 
 import 'auth_controller.dart';
+import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -85,6 +86,24 @@ class LoginScreen extends StatelessWidget {
                       },
                       child: const Text('Login'),
                     ),
+                  ),
+                  const SizedBox(height: 10),
+                  // forgot password button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ForgotPasswordScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text('Forgot Password?'),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 20),
                   Row(
