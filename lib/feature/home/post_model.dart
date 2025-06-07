@@ -1,7 +1,6 @@
 class PostModel {
   String id;
   final String content;
-  final String author;
   final String authorId;
   DateTime createdAt;
   DateTime updatedAt;
@@ -9,7 +8,6 @@ class PostModel {
   PostModel({
     this.id = '',
     required this.content,
-    required this.author,
     required this.authorId,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -19,7 +17,6 @@ class PostModel {
   PostModel.fromMap(Map<String, dynamic> json)
     : id = json['id'] ?? '',
       content = json['content'] ?? '',
-      author = json['author'] ?? '',
       authorId = json['authorId'] ?? '',
       createdAt = DateTime.parse(json['createdAt']),
       updatedAt = DateTime.parse(json['createdAt']);
@@ -28,7 +25,6 @@ class PostModel {
     return {
       'id': id,
       'content': content,
-      'author': author,
       'authorId': authorId,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
@@ -37,6 +33,6 @@ class PostModel {
 
   @override
   String toString() {
-    return 'PostModel{id: $id, content: $content, author: $author, autherId: $authorId ,createdAt: $createdAt}';
+    return 'PostModel{id: $id, content: $content, autherId: $authorId ,createdAt: $createdAt}';
   }
 }

@@ -30,4 +30,30 @@ class PostsController {
           }).toList();
         });
   }
+
+  Stream<List<PostModel>> getPostsByUser(String userId) {
+    return FirebaseFirestore.instance
+        .collection('posts')
+        .where('authorId', isEqualTo: userId)
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs.map((doc) {
+            return PostModel.fromMap(doc.data())..id = doc.id;
+          }).toList();
+        });
+  }
+
+  Stream<List<PostModel>> getPostsExcludingCurrentUser(String currentUserId) {
+    return FirebaseFirestore.instance
+        .collection('posts')
+        .where('authorId', isNotEqualTo: currentUserId)
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs.map((doc) {
+            return PostModel.fromMap(doc.data())..id = doc.id;
+          }).toList();
+        });
+  }
 }
