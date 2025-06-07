@@ -109,7 +109,25 @@ class ProfileScreen extends StatelessWidget {
                         );
                       } else if (!postSnapshot.hasData ||
                           postSnapshot.data!.isEmpty) {
-                        return const Center(child: Text("No posts available."));
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/images/empty.png'),
+                              Text(
+                                "No posts available.",
+                                style: Theme.of(
+                                  context,
+                                ).textTheme.headlineMedium,
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                "Be the first to create a post!",
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
+                          ),
+                        );
                       }
 
                       final posts = postSnapshot.data!;
