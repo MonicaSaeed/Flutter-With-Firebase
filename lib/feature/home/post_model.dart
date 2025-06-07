@@ -23,7 +23,6 @@ class PostModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'content': content,
       'authorId': authorId,
       'createdAt': createdAt.toIso8601String(),
