@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 extension StringExtensions on String {
   bool get isValidEmail {
     final emailRegex = RegExp(
@@ -18,5 +20,16 @@ extension StringExtensions on String {
   bool get isValidUsername {
     final usernameRegex = RegExp(r'^[a-zA-Z_]{3,20}$');
     return usernameRegex.hasMatch(this);
+  }
+}
+
+extension FirestoreDateParser on Map<String, dynamic> {
+  DateTime getParsedDate(String key, {DateTime? fallback}) {
+    final value = this[key];
+    if (value is Timestamp) return value.toDate();
+    if (value is String) {
+      return DateTime.tryParse(value) ?? fallback ?? DateTime.now();
+    }
+    return fallback ?? DateTime.now();
   }
 }

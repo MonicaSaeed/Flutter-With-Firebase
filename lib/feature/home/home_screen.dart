@@ -5,9 +5,9 @@ import 'package:flutter_app/feature/home/posts_controller.dart';
 import 'package:flutter_app/feature/profile/components/create_post.dart';
 import 'package:flutter_app/feature/profile/profile_screen.dart';
 import 'package:flutter_app/feature/profile/user_controller.dart';
-import 'package:intl/intl.dart';
 
 import '../profile/user_model.dart';
+import 'components/post_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -83,60 +83,7 @@ class HomeScreen extends StatelessWidget {
                     }
 
                     final userData = userSnapshot.data!;
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      elevation: 4,
-                      shadowColor: Colors.grey.withAlpha(50),
-                      child: ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                  userData.profilePictureUrl,
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    userData.name,
-                                    style: Theme.of(context).textTheme.bodyLarge
-                                        ?.copyWith(fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    DateFormat(
-                                      'yMMMMd – h:mm a',
-                                    ).format(post.createdAt),
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.bodySmall,
-                                  ),
-                                ],
-                              ),
-                              const Spacer(),
-                              if (post.createdAt != post.updatedAt)
-                                Text(
-                                  'Edited',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                            ],
-                          ),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Text(
-                            post.content,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                        ),
-                      ),
-                    );
+                    return PostCard(post: post, user: userData);
                   },
                 );
               },

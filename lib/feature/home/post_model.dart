@@ -1,3 +1,5 @@
+import 'package:flutter_app/core/extensions/extensions.dart';
+
 class PostModel {
   String id;
   final String content;
@@ -18,8 +20,11 @@ class PostModel {
     : id = json['id'] ?? '',
       content = json['content'] ?? '',
       authorId = json['authorId'] ?? '',
-      createdAt = DateTime.parse(json['createdAt']),
-      updatedAt = DateTime.parse(json['createdAt']);
+      createdAt = json.getParsedDate('createdAt'),
+      updatedAt = json.getParsedDate(
+        'updatedAt',
+        fallback: json.getParsedDate('createdAt'),
+      );
 
   Map<String, dynamic> toMap() {
     return {

@@ -70,7 +70,8 @@ class PostsController {
     try {
       await FirebaseFirestore.instance.collection('posts').doc(postId).update({
         'content': newContent,
-        'updatedAt': DateTime.now().toIso8601String(),
+        'updatedAt': FieldValue.serverTimestamp(),
+
       });
       ToastHelper.showSuccess("Post updated successfully");
     } catch (e) {
