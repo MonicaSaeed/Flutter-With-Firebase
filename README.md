@@ -1,7 +1,6 @@
 # Flutter Firebase Post App
 
-A modern Flutter application featuring user authentication, post creation, and profile management using Firebase Authentication and Firestore.
-
+A modern Flutter application featuring user authentication, post creation, and profile management using Firebase Authentication and Cloud Firestore. The app leverages real-time updates with Streams for dynamic content rendering
 ## 📦 Features
 
 * 🔐 **Authentication**
@@ -73,11 +72,6 @@ Here’s the updated `README.md` with all your screenshots organized into sectio
 
 ---
 
-# 🌱 Flutter Firebase Post App
-
-A modern Flutter app for user-generated content built with Firebase Authentication and Firestore.
-
----
 
 ## 📸 Screenshots
 
@@ -112,3 +106,5 @@ A modern Flutter app for user-generated content built with Firebase Authenticati
 | ![Add Post](https://github.com/user-attachments/assets/2fc1d3e3-69e0-447e-8c5c-f706fa1e1580) |
 
 ---
+
+## 
