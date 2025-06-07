@@ -68,8 +68,6 @@ lib/
 * **Authentication:** Email & Password
 * **Firestore:** Realtime database for `users` and `posts` collections
 
-Here’s the updated `README.md` with all your screenshots organized into sections for better clarity and presentation:
-
 ---
 
 
