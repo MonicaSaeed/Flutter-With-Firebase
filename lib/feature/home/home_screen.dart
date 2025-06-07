@@ -123,8 +123,7 @@ class HomeScreen extends StatelessWidget {
                               if (post.createdAt != post.updatedAt)
                                 Text(
                                   'Edited',
-                                  style: Theme.of(context).textTheme.bodySmall
-                                      ?.copyWith(color: Colors.grey),
+                                  style: Theme.of(context).textTheme.bodySmall,
                                 ),
                             ],
                           ),

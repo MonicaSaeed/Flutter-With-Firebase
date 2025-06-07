@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/theme/light_colors.dart';
 import 'package:flutter_app/feature/home/posts_controller.dart';
 import 'package:flutter_app/feature/profile/components/alert_dialog_change_user_data.dart';
 import 'package:flutter_app/feature/profile/components/create_post.dart';
@@ -13,9 +14,8 @@ import '../home/post_model.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
-  final _formKey = GlobalKey<FormState>();
 
-  get postContentController => null;
+  final newPostContentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -119,30 +119,174 @@ class ProfileScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final post = posts[index];
                           return Card(
-                            elevation: 2,
-                            margin: const EdgeInsets.symmetric(vertical: 8),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    DateFormat(
-                                      'yMMMMd – h:mm a',
-                                    ).format(post.createdAt),
-                                    style: Theme.of(context).textTheme.bodySmall
-                                        ?.copyWith(color: Colors.grey[600]),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    post.content,
-                                    style: Theme.of(context).textTheme.bodyLarge
-                                        ?.copyWith(fontWeight: FontWeight.w500),
-                                  ),
-                                ],
+                            elevation: 4,
+                            shadowColor: Colors.grey.withAlpha(50),
+                            child: ListTile(
+                              title: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                        user.profilePictureUrl,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              user.name,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge
+                                                  ?.copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                            ),
+                                            // add spaces to make the buttons in most right
+                                            IconButton(
+                                              icon: const Icon(Icons.edit),
+                                              color: Theme.of(
+                                                context,
+                                              ).colorScheme.primary,
+                                              onPressed: () {
+                                                newPostContentController.text =
+                                                    post.content;
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                        'Edit Post',
+                                                      ),
+                                                      content: TextFormField(
+                                                        controller:
+                                                            newPostContentController,
+                                                        maxLines: 3,
+                                                        decoration:
+                                                            const InputDecoration(
+                                                              labelText:
+                                                                  'Post Content',
+                                                            ),
+                                                      ),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                              context,
+                                                            ).pop();
+                                                          },
+                                                          child: const Text(
+                                                            'Cancel',
+                                                          ),
+                                                        ),
+                                                        ElevatedButton(
+                                                          onPressed: () {
+                                                            PostsController()
+                                                                .updatePostContent(
+                                                                  post.id,
+                                                                  newPostContentController
+                                                                      .text,
+                                                                );
+                                                            Navigator.of(
+                                                              context,
+                                                            ).pop();
+                                                          },
+                                                          child: const Text(
+                                                            'Save',
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                            IconButton(
+                                              icon: const Icon(Icons.delete),
+                                              color: LightColor.errorColor,
+                                              onPressed: () {
+                                                // show confirmation dialog
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                        'Delete Post',
+                                                      ),
+                                                      content: const Text(
+                                                        'Are you sure you want to delete this post?',
+                                                      ),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                              context,
+                                                            ).pop();
+                                                          },
+                                                          child: const Text(
+                                                            'Cancel',
+                                                          ),
+                                                        ),
+                                                        ElevatedButton(
+                                                          onPressed: () {
+                                                            PostsController()
+                                                                .deletePost(
+                                                                  post.id,
+                                                                );
+                                                            Navigator.of(
+                                                              context,
+                                                            ).pop();
+                                                          },
+                                                          child: const Text(
+                                                            'Delete',
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          DateFormat(
+                                            'yMMMMd – h:mm a',
+                                          ).format(post.createdAt),
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                    if (post.createdAt != post.updatedAt)
+                                      Text(
+                                        'Edited',
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.bodySmall,
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              subtitle: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0,
+                                ),
+                                child: Text(
+                                  post.content,
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
                               ),
                             ),
                           );

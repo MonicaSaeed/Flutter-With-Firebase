@@ -56,4 +56,25 @@ class PostsController {
           }).toList();
         });
   }
+
+  Future<void> deletePost(String postId) async {
+    try {
+      await FirebaseFirestore.instance.collection('posts').doc(postId).delete();
+      ToastHelper.showSuccess("Post deleted successfully");
+    } catch (e) {
+      ToastHelper.showError("Failed to delete post: ${e.toString()}");
+    }
+  }
+
+  Future<void> updatePostContent(String postId, String newContent) async {
+    try {
+      await FirebaseFirestore.instance.collection('posts').doc(postId).update({
+        'content': newContent,
+        'updatedAt': DateTime.now().toIso8601String(),
+      });
+      ToastHelper.showSuccess("Post updated successfully");
+    } catch (e) {
+      ToastHelper.showError("Failed to update post: ${e.toString()}");
+    }
+  }
 }
